@@ -30,7 +30,7 @@ function newMovieSearch(req, res) {
 function findMovies(req, res) {
   let SQL = 'SELECT * FROM movies;';
   return client.query(SQL)
-    .then(results => res.render('/views/index.ejs', {
+    .then(results => res.render('../index.ejs', {
       results: results.rows
     }))
     .catch(() => {
