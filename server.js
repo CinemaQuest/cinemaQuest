@@ -20,12 +20,17 @@ client.on('error', err => console.error(err));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////Routes/////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/', findMovies); //find a movie to watch
+app.get('/searches/new', newMovieSearch);
+
+function newMovieSearch(req, res) {
+  res.render('pages/searches/new');
+}
 
 
 function findMovies(req, res) {
   let SQL = 'SELECT * FROM movies;';
   return client.query(SQL)
-    .then(results => res.render('views/index', {
+    .then(results => res.render('/views/index.ejs', {
       results: results.rows
     }))
     .catch(() => {
