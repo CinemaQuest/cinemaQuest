@@ -25,7 +25,7 @@ app.get('/', findMovies); //find a movie to watch
 function findMovies(req, res) {
   let SQL = 'SELECT * FROM movies;';
   return client.query(SQL)
-    .then(results => res.render('pages/index', {
+    .then(results => res.render('views/index', {
       results: results.rows
     }))
     .catch(() => {
