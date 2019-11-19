@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 app.set('view engine', 'ejs');
 
-const client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
-client.on('error', err => console.error(err));
+// const client = new pg.Client(process.env.DATABASE_URL);
+// client.connect();
+// client.on('error', err => console.error(err));
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////Routes//////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/', findMovies); //find a movie to watch
@@ -71,9 +71,9 @@ function movieHandler(req, res) {
       // .then(movieArr => { res.render('pages/searches/show'), {movies: movieArr} })
       .catch(() => res.render('pages/error'))
   }
-  
+
   return setTimeout(function() {
-    res.render('pages/searches/show', { displayData: array})}, 1000);
+    res.render('pages/searches/show', { displayData: array})}, 500);
 
 }
 

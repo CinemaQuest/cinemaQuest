@@ -12,8 +12,8 @@
 	</header>
 	<main>
 		<% displayData.forEach(movie => { %>
-			<div id="search-result" >
-				<img src= <%= movie.poster_path %> alt="movie">
+		<div id="search-result">
+				<img src=" <%= movie.poster_path %>" alt="movie">
 				<p>Title: <%= movie.title %></p>
 				<p>Score: <%= movie.vote_average %></p>
 				<p>Overview: <%= movie.overview %></p>
@@ -21,17 +21,17 @@
 				<p>Genre: <%= movie.genre_ids %></p>
 
 				<form action="/add" method="post" class="formfield">
-					<input class="inputs" name="title" value= "<%= movie.title %>">
+					<input class="inputs" name="title" value="<%= movie.title %>">
 					<input class="inputs" name="vote_average" value=" <%= movie.vote_average %>">
-					<input class="inputs" name="overview" value=" <%= movie.overview %>" >
-					<input class="inputs"  name="poster_path" value=" <%= movie.poster_path %>">
+					<input class="inputs" name="overview" value=" <%= movie.overview %>">
+					<input class="inputs" name="poster_path" value=" <%= movie.poster_path %>">
 					<input class="inputs" name="release_date" value=" <%= movie.release_date %>">
 					<input class="inputs" name="genre_ids" value=" <%= movie.genre_ids %>">
-					<button type="submit" > Add Book!</button>
+					<button type="submit"> Add Book!</button>
 				</form>
 				<button class="edit-button">Select This Book</button>
-			</div>
-			<% }); %>
+		</div>
+		<% }); %>
 
 	</main>
 	<footer>
