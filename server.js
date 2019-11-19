@@ -73,7 +73,7 @@ function movieHandler(req, res) {
   }
   
   return setTimeout(function() {
-    res.render('pages/searches/show', { displayData: array})  }, 500);
+    res.render('pages/searches/show', { displayData: array})}, 1000);
 
 }
 
