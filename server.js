@@ -74,6 +74,7 @@ function movieHandler(req, res) {
   res.render('pages/searches/show', { displayData: array})
   setTimeout(function() {
     console.log('array: ',array)
+    movieArr = array;
   }, 500);
 }
 
