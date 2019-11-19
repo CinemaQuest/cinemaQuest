@@ -1,0 +1,9 @@
+main{
+  display: flex;
+}
+
+#search-result{
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+}
