@@ -58,10 +58,10 @@ function movieHandler(req, res) {
     let randomNumber = randomNum(0,19)
     if ((typeof req.body.search) === 'object') {
       const genre = req.body.search.join(',')
-      url += `with_genres=${genre}`;
+      url += `&with_genres=${genre}`;
     } else if ((typeof req.body.search) === 'string') {
       const genre = req.body.search
-      url += `with_genres=${genre}`;
+      url += `&with_genres=${genre}`;
     }
 
     superagent.get(url)
