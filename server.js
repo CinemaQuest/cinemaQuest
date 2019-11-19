@@ -16,12 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 app.set('view engine', 'ejs');
 
-// const client = new pg.Client(process.env.DATABASE_URL);
-// client.connect();
-// client.on('error', err => console.error(err));
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////Routes//////////////////////////////////////////////////////////////////////////////////////////////////
-// app.get('/', findMovies); //find a movie to watch
+app.get('/', findMovies); //find a movie to watch
 
 app.get('/search', (req, res) => {
   res.render('pages/searches/new')
@@ -77,16 +77,16 @@ function movieHandler(req, res) {
 
 }
 
-// function findMovies(req, res) {
-//   let SQL = 'SELECT * FROM movies;';
-//   return client.query(SQL)
-//     .then(results => res.render('../index.ejs', {
-//       results: results.rows
-//     }))
-//     .catch(() => {
-//       res.render('pages/error');
-//     })
-// }
+function findMovies(req, res) {
+  let SQL = 'SELECT * FROM movies;';
+  return client.query(SQL)
+    .then(results => res.render('../index.ejs', {
+      results: results.rows
+    }))
+    .catch(() => {
+      res.render('pages/error');
+    })
+}
 
 //constructor function
 function Movie(film) {
