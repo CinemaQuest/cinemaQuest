@@ -13,4 +13,5 @@ img{
 
 #search-result{
   border: 3px solid black;
+  align-content: center;
 }
