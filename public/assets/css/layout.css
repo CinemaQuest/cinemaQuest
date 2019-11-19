@@ -1,10 +1,46 @@
 main{
   display: flex;
+  justify-content: space-around;
+  height: 100vh;
 }
 
 #search-result{
-  width: 300px;
+  width: 400px;
+  align-content: center;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
 }
-fgdhabfjhbjnfmndjanbjk
+
+img{
+  display: flex;
+  align-self: center;
+}
+
+nav{
+  display: flex;
+}
+
+nav>ul>li{
+  width: 200px;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-self: center;
+}
+
+.buttonDiv{
+  display: flex;
+justify-content: center
+}
+
+.introButton{
+  height: 200px;
+  width: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
