@@ -2,23 +2,45 @@
 <html lang="en">
 
 <head>
-  <%-include('../../partials/head')-%>
-  <title>Cinema Quest</title>
+	<%-include('../../partials/head')-%>
+	<title>Cinema Quest</title>
 </head>
 
 <body>
-  <header>
-    <%-include('../../partials/header')-%>
-  </header>
-  <main>
-    <article>
-      New Page
-    </article>
+	<header>
+		<%-include('../../partials/header')-%>
+	</header>
+	<main>
+		<main>
+			<div>Search Movie</div>
+			<form action="/searches" method="post">
+				<fieldset>
+						<label for="search">Genres
+						<input type="checkbox" name="search" value="28">Action
+						<input type="checkbox" name="search" value="12">Adventure
+						<input type="checkbox" name="search" value="16">Animation
+						<input type="checkbox" name="search" value="18">Drama
+						<input type="checkbox" name="search" value="10751">Family<br>
+						<input type="checkbox" name="search" value="14">Fantasy
+						<input type="checkbox" name="search" value="36">History
+						<input type="checkbox" name="search" value="27">Horror
+						<input type="checkbox" name="search" value="10402">Music
+						<input type="checkbox" name="search" value="9648">Mystery<br>
+						<input type="checkbox" name="search" value="10749">Romance
+						<input type="checkbox" name="search" value="878">Science Fiction
+						<input type="checkbox" name="search" value="10770">TV Movie
+						<input type="checkbox" name="search" value="53">Thriller
+						<input type="checkbox" name="search" value="10752">War
+					</label>
 
-  </main>
-  <footer>
-    <%-include('../../partials/footer')-%>
-  </footer>
+				</fieldset>
+				<button type="submit" id="hi">submit</button>
+			</form>
+		</main>
+		<footer>
+			<%-include('../../partials/footer')-%>
+		</footer>
+
 </body>
 
 </html>
