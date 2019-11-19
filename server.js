@@ -28,7 +28,7 @@ app.get('/search', (req, res) => {
 })
 app.post('/searches', movieHandler);
 app.get('/newMovie', newMovieSearch);
-
+app.post('/add', addmovie);
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
@@ -86,6 +86,15 @@ function findMovies(req, res) {
     .catch(() => {
       res.render('pages/error');
     })
+}
+
+function addmovie(req,res) {
+  let {title, vote_average, overview, poster_path, release_date} = req.body;
+  let SQL = 'INSERT into movies(title, overview, thumbnail, release_date, vote_average) VALUES ($1, $2, $3, $4, $5);';
+  let values = [title, vote_average, overview, poster_path, release_date];
+  return client.query(SQL, values)
+    .then(res.redirect('/'))
+    .catch(err => console.error(err))
 }
 
 //constructor function
