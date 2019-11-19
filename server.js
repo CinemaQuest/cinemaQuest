@@ -53,7 +53,7 @@ function movieHandler(req, res) {
 
   let array = [];
   for (let i = 1; i < 4; i++) {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=10`;
 
     let randomNumber = randomNum(0,19)
     if ((typeof req.body.search) === 'object') {
@@ -72,7 +72,7 @@ function movieHandler(req, res) {
       .catch(() => res.render('pages/error'))
   }
   return setTimeout(function() {
-    res.render('pages/searches/show', { displayData: array})  }, 500);
+    res.render('pages/searches/show', { displayData: array}) }, 1000);
 
 }
 
@@ -88,6 +88,7 @@ function findMovies(req, res) {
 }
 
 function addmovie(req,res) {
+  console.log('req.body',req.body);
   let {title, vote_average, overview, poster_path, release_date} = req.body;
   let SQL = 'INSERT into movies(title, overview, thumbnail, release_date, vote_average) VALUES ($1, $2, $3, $4, $5);';
   let values = [title, vote_average, overview, poster_path, release_date];
