@@ -18,12 +18,30 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
 
-//////////////////////////////////////////////////////////////////////////////////////////////////Routes/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////Routes//////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/', findMovies); //find a movie to watch
+
 app.get('/search', (req, res) => {
   res.render('pages/searches/new')
 })
 app.post('/searches', movieHandler);
+
+app.get('/newMovie', newMovieSearch);
+app.get('/showMovie', showMyMovie);
+app.get('/aboutUs', aboutUsPage);
+
+
+function newMovieSearch(req, res) {
+  res.render('../views/pages/searches/new');
+}
+
+function showMyMovie(req, res) {
+  res.render('../views/pages/searches/show');
+}
+
+function aboutUsPage(req, res) {
+  res.render('../views/pages/searches/about');
+}
 
 function randomNum(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -47,7 +65,7 @@ function movieHandler(req, res) {
 function findMovies(req, res) {
   let SQL = 'SELECT * FROM movies;';
   return client.query(SQL)
-    .then(results => res.render('views/index', {
+    .then(results => res.render('../index.ejs', {
       results: results.rows
     }))
     .catch(() => {
