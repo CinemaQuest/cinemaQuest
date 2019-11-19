@@ -71,9 +71,8 @@ function movieHandler(req, res) {
       // .then(movieArr => { res.render('pages/searches/show'), {movies: movieArr} })
       .catch(() => res.render('pages/error'))
   }
-
   return setTimeout(function() {
-    res.render('pages/searches/show', { displayData: array})}, 500);
+    res.render('pages/searches/show', { displayData: array})  }, 500);
 
 }
 
