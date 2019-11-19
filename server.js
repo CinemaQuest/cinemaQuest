@@ -50,6 +50,8 @@ function randomNum(min, max) {
 }
 
 function movieHandler(req, res) {
+
+  let array = [];
   for (let i = 1; i < 4; i++) {
     let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
 
@@ -63,13 +65,16 @@ function movieHandler(req, res) {
     }
 
     superagent.get(url)
-      .then(data => { 
-        return new Movie(data.body.results[randomNumber])})
+      .then(data => {
+        array.push(new Movie(data.body.results[randomNumber]))
+      })
       // .then(movieArr => { res.render('pages/searches/show'), {movies: movieArr} })
       .catch(() => res.render('pages/error'))
   }
-  console.log('movieArr',movieArr);
-  res.render('pages/searches/show');
+  res.render('pages/searches/show', { displayData: array})
+  setTimeout(function() {
+    console.log('array: ',array)
+  }, 500);
 }
 
 function findMovies(req, res) {
