@@ -20,10 +20,21 @@ client.on('error', err => console.error(err));
 
 //////////////////////////////////////////////////////////////////////////////////////////////////Routes//////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/', findMovies); //find a movie to watch
-app.get('/searches/new', newMovieSearch);
+app.get('/newMovie', newMovieSearch);
+app.get('/showMovie', showMyMovie);
+app.get('/aboutUs', aboutUsPage);
+
 
 function newMovieSearch(req, res) {
-  res.render('pages/searches/new');
+  res.render('../views/pages/searches/new');
+}
+
+function showMyMovie(req, res) {
+  res.render('../views/pages/searches/show');
+}
+
+function aboutUsPage(req, res) {
+  res.render('../views/pages/searches/about');
 }
 
 
