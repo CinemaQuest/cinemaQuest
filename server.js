@@ -27,8 +27,8 @@ app.get('/search', (req, res) => {
   res.render('pages/searches/new')
 })
 app.post('/searches', movieHandler);
-
 app.get('/newMovie', newMovieSearch);
+
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
@@ -71,11 +71,10 @@ function movieHandler(req, res) {
       // .then(movieArr => { res.render('pages/searches/show'), {movies: movieArr} })
       .catch(() => res.render('pages/error'))
   }
-  res.render('pages/searches/show', { displayData: array})
-  setTimeout(function() {
-    console.log('array: ',array)
-    movieArr = array;
-  }, 500);
+  
+  return setTimeout(function() {
+    res.render('pages/searches/show', { displayData: array})  }, 500);
+
 }
 
 function findMovies(req, res) {
@@ -93,8 +92,10 @@ function findMovies(req, res) {
 function Movie(film) {
   this.poster_path = `http://image.tmdb.org/t/p/w342/${film.poster_path}`;
   this.title = film.title;
+  this.overview = film.overview;
   this.vote_average = film.vote_average;
   this.release_date = new Date(film.release_date);
+  this.genre_ids = film.genre_ids;
   movieArr.push(this);
 }
 
