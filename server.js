@@ -61,32 +61,35 @@ function randomNum(min, max) {
 
 function movieHandler(req, res) {
 
-  let array = [];
-  for (let i = 1; i < 4; i++) {
+  // let array = [];
+  // for (let i = 1; i < 4; i++) {
+  const i = 1;
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=9.9`;
 
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=9.9`;
-
-    let randomNumber = randomNum(0,19)
-    if ((typeof req.body.search) === 'object') {
-      const genre = req.body.search.join(',')
-      url += `&with_genres=${genre}`;
-    } else if ((typeof req.body.search) === 'string') {
-      const genre = req.body.search
-      url += `&with_genres=${genre}`;
-    }
-
-    superagent.get(url)
-      .then(data => {
-        array.push(new Movie(data.body.results[randomNumber]))
-      })
-      .catch(() => res.render('pages/error'))
+  if ((typeof req.body.search) === 'object') {
+    const genre = req.body.search.join(',')
+    url += `&with_genres=${genre}`;
+  } else if ((typeof req.body.search) === 'string') {
+    const genre = req.body.search
+    url += `&with_genres=${genre}`;
   }
-  return setTimeout(function() {
-
-    res.render('pages/searches/show', { displayData: array})
-  }, 900);
-
-
+  let randomNumber;
+  superagent.get(url)
+    .then(data => {
+      console.log('data.body.total_results',typeof(data.body.total_results))
+      if (data.body.total_pages === 1) {
+        randomNumber = randomNum(0,data.body.total_results-1);
+        let array = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: array})
+      } else {
+        randomNumber = randomNum(0,19);
+        let array = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: array})
+      }
+    })
+    .catch(() => {
+      res.render('pages/noresults')
+    })
 }
 
 function findMovies(req, res) {
