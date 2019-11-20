@@ -38,7 +38,7 @@ function newMovieSearch(req, res) {
 }
 
 function showMyMovie(req, res) {
-  res.render('../views/pages/searches/show');
+  res.render('../views/pages/movies/list', { displayData: movieArr});
 }
 
 function aboutUsPage(req, res) {
@@ -53,15 +53,16 @@ function movieHandler(req, res) {
 
   let array = [];
   for (let i = 1; i < 4; i++) {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=9.99&`;
+
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=9.9`;
 
     let randomNumber = randomNum(0,19)
     if ((typeof req.body.search) === 'object') {
       const genre = req.body.search.join(',')
-      url += `with_genres=${genre}`;
+      url += `&with_genres=${genre}`;
     } else if ((typeof req.body.search) === 'string') {
       const genre = req.body.search
-      url += `with_genres=${genre}`;
+      url += `&with_genres=${genre}`;
     }
 
     superagent.get(url)
@@ -71,8 +72,10 @@ function movieHandler(req, res) {
       .catch(() => res.render('pages/error'))
   }
   return setTimeout(function() {
+
     res.render('pages/searches/show', { displayData: array})
   }, 900);
+
 
 }
 
@@ -88,9 +91,10 @@ function findMovies(req, res) {
 }
 
 function addmovie(req,res) {
+  console.log('req.body',req.body);
   let {title, vote_average, overview, poster_path, release_date} = req.body;
   let SQL = 'INSERT into movies(title, overview, thumbnail, release_date, vote_average) VALUES ($1, $2, $3, $4, $5);';
-  let values = [title, vote_average, overview, poster_path, release_date];
+  let values = [title, overview, poster_path, release_date, vote_average];
   return client.query(SQL, values)
     .then(res.redirect('/'))
     .catch(err => console.error(err))
