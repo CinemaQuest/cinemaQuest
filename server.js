@@ -38,7 +38,17 @@ function newMovieSearch(req, res) {
 }
 
 function showMyMovie(req, res) {
-  res.render('../views/pages/movies/list', { displayData: movieArr});
+  let SQL = 'SELECT * FROM movies;';
+  movieArr = [];
+  client.query(SQL)
+    .then(results => {
+      results.rows.map(ele => movieArr.push(ele));
+      res.render('../views/pages/movies/list', { displayData: movieArr});
+    })
+    .catch(() => {
+      res.render('pages/error');
+    })
+  // res.render('../views/pages/movies/list', { displayData: movieArr});
 }
 
 function aboutUsPage(req, res) {
@@ -77,18 +87,19 @@ function movieHandler(req, res) {
 }
 
 function findMovies(req, res) {
-  let SQL = 'SELECT * FROM movies;';
-  return client.query(SQL)
-    .then(results => res.render('../index.ejs', {
-      results: results.rows
-    }))
-    .catch(() => {
-      res.render('pages/error');
-    })
+  // let SQL = 'SELECT * FROM movies;';
+  res.render('../index.ejs')
+  // return client.query(SQL)
+  //   .then(results => res.render('../index.ejs', {
+  //     results: results.rows
+  //   }))
+  //   .catch(() => {
+  //     res.render('pages/error');
+  //   })
 }
 
 function addmovie(req,res) {
-  console.log('req.body',req.body);
+  // console.log('req.body',req.body);
   let {title, vote_average, overview, poster_path, release_date} = req.body;
   let SQL = 'INSERT into movies(title, overview, thumbnail, release_date, vote_average) VALUES ($1, $2, $3, $4, $5);';
   let values = [title, overview, poster_path, release_date, vote_average];
