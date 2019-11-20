@@ -21,6 +21,18 @@ img{
   align-self: center;
 }
 
+#reroll{
+  width:20vh;
+  height:20vh;
+  opacity: 1;
+}
+
+#reroll:hover{
+  opacity: .65;
+          transform: rotate(-15deg);
+}
+
+
 nav{
   display: flex;
   width: 115vw;
