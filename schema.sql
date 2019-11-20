@@ -6,10 +6,10 @@ DROP TABLE IF EXISTS movies;
 
 CREATE TABLE movies (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(255),
+  title VARCHAR(500),
   overview TEXT,
-  thumbnail VARCHAR(255),
-  release_date VARCHAR(255),
+  thumbnail VARCHAR(500),
+  release_date VARCHAR(500),
   vote_average VARCHAR(255)
 );
 

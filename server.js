@@ -91,7 +91,7 @@ function addmovie(req,res) {
   console.log('req.body',req.body);
   let {title, vote_average, overview, poster_path, release_date} = req.body;
   let SQL = 'INSERT into movies(title, overview, thumbnail, release_date, vote_average) VALUES ($1, $2, $3, $4, $5);';
-  let values = [title, vote_average, overview, poster_path, release_date];
+  let values = [title, overview, poster_path, release_date, vote_average];
   return client.query(SQL, values)
     .then(res.redirect('/'))
     .catch(err => console.error(err))
