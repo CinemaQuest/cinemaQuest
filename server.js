@@ -64,7 +64,7 @@ function movieHandler(req, res) {
   // let array = [];
   // for (let i = 1; i < 4; i++) {
   const i = 1;
-  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=9.9`;
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
 
   if ((typeof req.body.search) === 'object') {
     const genre = req.body.search.join(',')
@@ -76,14 +76,16 @@ function movieHandler(req, res) {
   let randomNumber;
   superagent.get(url)
     .then(data => {
-      console.log('data.body.total_results',typeof(data.body.total_results))
+      console.log('data.body.total_results',data.body.total_results)
       if (data.body.total_pages === 1) {
         randomNumber = randomNum(0,data.body.total_results-1);
-        let array = new Movie(data.body.results[randomNumber])
+        let array =[];
+        array[0] = new Movie(data.body.results[randomNumber])
         res.render('pages/searches/show', { displayData: array})
       } else {
         randomNumber = randomNum(0,19);
-        let array = new Movie(data.body.results[randomNumber])
+        let array =[];
+        array[0] = new Movie(data.body.results[randomNumber])
         res.render('pages/searches/show', { displayData: array})
       }
     })
@@ -120,7 +122,7 @@ function Movie(film) {
   this.title = film.title;
   this.overview = film.overview;
   this.vote_average = film.vote_average;
-  this.release_date = new Date(film.release_date);
+  this.release_date = film.release_date;
   this.genre_ids = film.genre_ids;
   movieArr.push(this);
 }
