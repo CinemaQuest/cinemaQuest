@@ -20,6 +20,7 @@
 				<p>Genre: <%= movie.genre_ids %></p> <br>
 
 				<form action="/add" method="post" class="formfield">
+					<input class="inputs" name="id" value="<%= movie.id %>">
 					<input class="inputs" name="title" value="<%= movie.title %>">
 					<input class="inputs" name="vote_average" value=" <%= movie.vote_average %>">
 					<input class="inputs" name="overview" value=" <%= movie.overview %>">

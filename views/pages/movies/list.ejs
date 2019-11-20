@@ -18,7 +18,12 @@
 				<p>Score: <%= movie.vote_average %></p> <br>
 				<!-- <p>Overview: <%= movie.overview %></p> <br> -->
 				<p>Release Date: <%= movie.release_date %></p> <br>
-				<!-- <p>Genre: <%= movie.genre_ids %></p> <br> -->
+				<p>DB ID: <%= movie.id %></p> <br>
+
+				<form method="POST" action="<%=`/showMovie/${movie.id}` %>">
+					<button value= <%= movie.id %>>Delete Movie </button>
+					<input type="hidden" name="_method" value="DELETE">
+				</form>
 		</div>
 		<% }); %>
 
