@@ -54,7 +54,6 @@ function showMyMovie(req, res) {
     .catch(() => {
       res.render('pages/error');
     })
-  // res.render('../views/pages/movies/list', { displayData: movieArr});
 }
 app.get('/showMovie/:id', (req,res) => {
   let SQL = `SELECT * FROM movies WHERE id = $1;`;
@@ -72,9 +71,18 @@ app.delete('/showMovie/:id', (req,res) => {
   let SQL = `DELETE FROM movies WHERE id = $1;`;
   let values = [req.params.id];
   client.query(SQL,values)
-    .then(res.redirect('../views/pages/movies/list'))
+    .then(res.redirect('/showMovie'))
     .catch(err => console.error(err))
 });
+
+app.put('/update/:id',(req,res)=>{
+  let comment = req.body.comment;
+  let SQL = 'UPDATE movies SET comment=$1 WHERE id=$2;';
+  let values = [comment, req.params.id];  
+  client.query(SQL, values)
+    .then(res.redirect('/showMovie'))
+    .catch(err => console.error(err))
+})
 
 
 
@@ -88,8 +96,6 @@ function randomNum(min, max) {
 
 function movieHandler(req, res) {
 
-  // let array = [];
-  // for (let i = 1; i < 4; i++) {
   const i = 1;
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
 
@@ -122,24 +128,15 @@ function movieHandler(req, res) {
 }
 
 function findMovies(req, res) {
-  // let SQL = 'SELECT * FROM movies;';
   res.render('../index.ejs')
-  // return client.query(SQL)
-  //   .then(results => res.render('../index.ejs', {
-  //     results: results.rows
-  //   }))
-  //   .catch(() => {
-  //     res.render('pages/error');
-  //   })
 }
 
 function addmovie(req,res) {
-  // console.log('req.body',req.body);
   let {title, vote_average, overview, poster_path, release_date} = req.body;
   let SQL = 'INSERT into movies(title, overview, thumbnail, release_date, vote_average) VALUES ($1, $2, $3, $4, $5);';
   let values = [title, overview, poster_path, release_date, vote_average];
   return client.query(SQL, values)
-    .then(res.redirect('/'))
+    .then(res.redirect('/showMovie'))
     .catch(err => console.error(err))
 }
 
