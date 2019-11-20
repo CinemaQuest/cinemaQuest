@@ -1,11 +1,15 @@
-main{
+.indexMain{
   display: flex;
   justify-content: space-around;
+}
+
+main{
   height: 100vh;
+  padding: 3vw;
 }
 
 #search-result{
-  width: 400px;
+  width: 50vw;
   align-content: center;
   display: flex;
   flex-direction: column;
@@ -31,28 +35,27 @@ img{
 
 nav{
   display: flex;
-}
-
-nav>ul>li{
-  width: 200px;
-  display: inline-flex;
-  flex-direction: row;
+  width: 115vw;
   justify-content: space-around;
   align-self: center;
 }
 
+nav>ul>li{
+  width: 25vw;
+  display: inline-flex;
+}
+
 .buttonDiv{
   display: flex;
-justify-content: center
+  justify-content: center
 }
 
 .introButton{
-  height: 200px;
-  width: 200px;
+  height: 25vh;
+  width: 25vw;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 3vw;
+  margin-right: 3vw;
 }
-
