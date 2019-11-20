@@ -6,7 +6,7 @@ require('dotenv').config();
 const express = require('express');
 const pg = require('pg');
 const superagent = require('superagent');
-
+const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -32,6 +32,14 @@ app.post('/add', addmovie);
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
+app.use(methodOverride ((req,res) => {
+  if(req.body && typeof req.body === 'object' && '_method' in req.body){
+    let method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+
 
 function newMovieSearch(req, res) {
   res.render('../views/pages/searches/new');
@@ -39,17 +47,36 @@ function newMovieSearch(req, res) {
 
 function showMyMovie(req, res) {
   let SQL = 'SELECT * FROM movies;';
-  movieArr = [];
   client.query(SQL)
     .then(results => {
-      results.rows.map(ele => movieArr.push(ele));
-      res.render('../views/pages/movies/list', { displayData: movieArr});
+      res.render('../views/pages/movies/list', { displayData: results.rows});
     })
     .catch(() => {
       res.render('pages/error');
     })
   // res.render('../views/pages/movies/list', { displayData: movieArr});
 }
+app.get('/showMovie/:id', (req,res) => {
+  let SQL = `SELECT * FROM movies WHERE id = $1;`;
+  let values = [req.params.id];
+  client.query(SQL,values)
+    .then(results =>{
+      res.render('../views/pages/movies/list', { displayData: results.rows})
+    })
+    .catch(() => {
+      res.render('pages/error');
+    })
+});
+
+app.delete('/showMovie/:id', (req,res) => {
+  let SQL = `DELETE FROM movies WHERE id = $1;`;
+  let values = [req.params.id];
+  client.query(SQL,values)
+    .then(res.redirect('../views/pages/movies/list'))
+    .catch(err => console.error(err))
+});
+
+
 
 function aboutUsPage(req, res) {
   res.render('../views/pages/searches/about');
@@ -61,32 +88,37 @@ function randomNum(min, max) {
 
 function movieHandler(req, res) {
 
-  let array = [];
-  for (let i = 1; i < 4; i++) {
+  // let array = [];
+  // for (let i = 1; i < 4; i++) {
+  const i = 1;
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
 
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=9.9`;
-
-    let randomNumber = randomNum(0,19)
-    if ((typeof req.body.search) === 'object') {
-      const genre = req.body.search.join(',')
-      url += `&with_genres=${genre}`;
-    } else if ((typeof req.body.search) === 'string') {
-      const genre = req.body.search
-      url += `&with_genres=${genre}`;
-    }
-
-    superagent.get(url)
-      .then(data => {
-        array.push(new Movie(data.body.results[randomNumber]))
-      })
-      .catch(() => res.render('pages/error'))
+  if ((typeof req.body.search) === 'object') {
+    const genre = req.body.search.join(',')
+    url += `&with_genres=${genre}`;
+  } else if ((typeof req.body.search) === 'string') {
+    const genre = req.body.search
+    url += `&with_genres=${genre}`;
   }
-  return setTimeout(function() {
-
-    res.render('pages/searches/show', { displayData: array})
-  }, 900);
-
-
+  let randomNumber;
+  superagent.get(url)
+    .then(data => {
+      console.log('data.body.total_results',data.body.total_results)
+      if (data.body.total_pages === 1) {
+        randomNumber = randomNum(0,data.body.total_results-1);
+        let array =[];
+        array[0] = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: array})
+      } else {
+        randomNumber = randomNum(0,19);
+        let array =[];
+        array[0] = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: array})
+      }
+    })
+    .catch(() => {
+      res.render('pages/noresults')
+    })
 }
 
 function findMovies(req, res) {
@@ -117,7 +149,7 @@ function Movie(film) {
   this.title = film.title;
   this.overview = film.overview;
   this.vote_average = film.vote_average;
-  this.release_date = new Date(film.release_date);
+  this.release_date = film.release_date;
   this.genre_ids = film.genre_ids;
   movieArr.push(this);
 }
