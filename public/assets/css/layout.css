@@ -1,0 +1,61 @@
+.indexMain{
+  display: flex;
+  justify-content: space-around;
+}
+
+main{
+  height: 100vh;
+  padding: 3vw;
+}
+
+#search-result{
+  width: 50vw;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+img{
+  display: flex;
+  align-self: center;
+}
+
+#reroll{
+  width:20vh;
+  height:20vh;
+  opacity: 1;
+}
+
+#reroll:hover{
+  opacity: .65;
+          transform: rotate(-15deg);
+}
+
+
+nav{
+  display: flex;
+  width: 115vw;
+  justify-content: space-around;
+  align-self: center;
+}
+
+nav>ul>li{
+  width: 25vw;
+  display: inline-flex;
+}
+
+.buttonDiv{
+  display: flex;
+  justify-content: center
+}
+
+.introButton{
+  height: 25vh;
+  width: 25vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 3vw;
+  margin-right: 3vw;
+}

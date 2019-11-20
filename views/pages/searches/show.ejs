@@ -2,23 +2,42 @@
 <html lang="en">
 
 <head>
-  <%-include('../../partials/head')-%>
-  <title>Cinema Quest</title>
+	<%-include('../../partials/head')-%>
+	<title>Cinema Quest</title>
 </head>
 
 <body>
-  <header>
-    <%-include('../../partials/header')-%>
-  </header>
-  <main>
-    <article>
-      Show Page
-    </article>
+	<header>
+		<%-include('../../partials/header')-%>
+	</header>
+		<% displayData.forEach(movie => { %>
+		<div id="search-result">
+				<img src=" <%= movie.poster_path %>" alt="movie"> <br>
+				<p>Title: <%= movie.title %></p> <br>
+				<p>Score: <%= movie.vote_average %></p> <br>
+				<p>Overview: <%= movie.overview %></p> <br>
+				<p>Release Date: <%= movie.release_date %></p> <br>
+				<p>Genre: <%= movie.genre_ids %></p> <br>
 
-  </main>
-  <footer>
-    <%-include('../../partials/footer')-%>
-  </footer>
+				<form action="/add" method="post" class="formfield">
+					<input class="inputs" name="title" value="<%= movie.title %>">
+					<input class="inputs" name="vote_average" value=" <%= movie.vote_average %>">
+					<input class="inputs" name="overview" value=" <%= movie.overview %>">
+					<input class="inputs" name="poster_path" value=" <%= movie.poster_path %>">
+					<input class="inputs" name="release_date" value=" <%= movie.release_date %>">
+					<input class="inputs" name="genre_ids" value=" <%= movie.genre_ids %>">
+					<button type="submit"> Add Movie!</button>
+				</form>
+		</div>
+		<% }); %>
+
+		<img id="reroll" src="reroll.png" alt="Re-Roll">
+	</main>
+	<footer>
+		<%-include('../../partials/footer')-%>
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="../../../public/assets/js/app.js"></script>
 </body>
 
 </html>

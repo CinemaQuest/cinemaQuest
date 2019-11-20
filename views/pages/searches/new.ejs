@@ -12,29 +12,38 @@
 	</header>
 	<main>
 		<main>
-			<div>Search Movie</div>
-			<form action="/searches" method="post">
+			<div class="searchMovie">Search Movie</div><br><br>
+			<form class="newForm flexField" action="/searches" method="post">
 				<fieldset>
-						<label for="search">Genres
+					<label for="search">Genres <br><br>
 						<input type="checkbox" name="search" value="28">Action
 						<input type="checkbox" name="search" value="12">Adventure
 						<input type="checkbox" name="search" value="16">Animation
+						<input type="checkbox" name="search" value="35">Comedy
+
+						<input type="checkbox" name="search" value="80">Crime<br>
+						<input type="checkbox" name="search" value="99">Documentary
+
 						<input type="checkbox" name="search" value="18">Drama
-						<input type="checkbox" name="search" value="10751">Family<br>
+						<input type="checkbox" name="search" value="10751">Family
 						<input type="checkbox" name="search" value="14">Fantasy
-						<input type="checkbox" name="search" value="36">History
+						<input type="checkbox" name="search" value="36">History<br>
 						<input type="checkbox" name="search" value="27">Horror
 						<input type="checkbox" name="search" value="10402">Music
-						<input type="checkbox" name="search" value="9648">Mystery<br>
+						<input type="checkbox" name="search" value="9648">Mystery
 						<input type="checkbox" name="search" value="10749">Romance
-						<input type="checkbox" name="search" value="878">Science Fiction
+						<input type="checkbox" name="search" value="878">Science Fiction<br>
 						<input type="checkbox" name="search" value="10770">TV Movie
 						<input type="checkbox" name="search" value="53">Thriller
 						<input type="checkbox" name="search" value="10752">War
+						<input type="checkbox" name="search" value="37">Western <br><br>
+
 					</label>
 
 				</fieldset>
-				<button type="submit" id="hi">submit</button>
+				<div class="buttonDiv">
+					<button class="introButton" type="submit" id="hi">submit</button>
+				</div>
 			</form>
 		</main>
 		<footer>

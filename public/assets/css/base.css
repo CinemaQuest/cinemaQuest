@@ -2,7 +2,40 @@
   background-color: #C6F1E7
 }
 
+h2, .introP, .searchMovie, .newForm{
+  text-align: center;
+}
+
+.newForm{
+  border: 3px solid black;
+  height: 50vh;
+  padding-top: 5px;
+}
+
+input{
+  height: 25px;
+}
+
 img{
-  width: 400px;
-  height: 200px;
+  width: 25vw;
+  height: 38vh;
+}
+
+.inputs{
+  display: none;
+}
+
+#search-result{
+  border: 3px solid black;
+  background-color: darkgrey;
+}
+
+p, form{
+  background-color: transparent;
+}
+
+.introButton{
+  display: flex;
+  background-color: lightslategray;
+  border-radius: 15%;
 }

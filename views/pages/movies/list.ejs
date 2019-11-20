@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<%-include('../../partials/head')-%>
+	<title>Cinema Quest</title>
+</head>
+
+<body>
+	<header>
+		<%-include('../../partials/header')-%>
+	</header>
+	<main>
+		<% displayData.forEach(movie => { %>
+		<div id="db-result">
+				<img src=" <%= movie.thumbnail %>" alt="movie"> <br>
+				<p>Title: <%= movie.title %></p> <br>
+				<p>Score: <%= movie.vote_average %></p> <br>
+				<!-- <p>Overview: <%= movie.overview %></p> <br> -->
+				<p>Release Date: <%= movie.release_date %></p> <br>
+				<!-- <p>Genre: <%= movie.genre_ids %></p> <br> -->
+		</div>
+		<% }); %>
+
+	</main>
+	<footer>
+		<%-include('../../partials/footer')-%>
+	</footer>
+</body>
+
+</html>
