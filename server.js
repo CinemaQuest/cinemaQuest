@@ -38,7 +38,7 @@ function newMovieSearch(req, res) {
 }
 
 function showMyMovie(req, res) {
-  res.render('../views/pages/searches/show');
+  res.render('../views/pages/movies/list', { displayData: movieArr});
 }
 
 function aboutUsPage(req, res) {
@@ -53,7 +53,7 @@ function movieHandler(req, res) {
 
   let array = [];
   for (let i = 1; i < 4; i++) {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=10`;
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=8&vote_average.lte=9.9`;
 
     let randomNumber = randomNum(0,19)
     if ((typeof req.body.search) === 'object') {
