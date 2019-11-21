@@ -10,14 +10,15 @@
 	<header>
 		<%-include('../../partials/header')-%>
 	</header>
+	<main>
 			<!--this partial renders data from the movie DB API on the page-->
 		<div id="search-result">
 				<img src= <%= displayData[0].poster_path %> alt="movie"> <br>
 				<p>Title: <%= displayData[0].title %></p> <br>
 				<p>Score: <%= displayData[0].vote_average %></p> <br>
 				<p>Overview: <%= displayData[0].overview %></p> <br>
-				<p>Release Date: <%= displayData[0].release_date %></p> <br>
-				<p>Genres: <%= displayData[0].genre_ids %></p> <br>
+				<p>Release Date: <%= displayData[0].release_date %></p>
+				<p>Genres: <%= displayData[0].genre_ids %></p>
 
 				<!--form that captures all the fields given from the API and able to send them into the request body to ultimately store them in DB-->
 				<form action="/add" method="post" class="formfield">
@@ -30,6 +31,11 @@
 					<input class="inputs" name="genre_ids" value=" <%= displayData[0].genre_ids %>">
 					<button type="submit"> Add Movie!</button>
 				</form>
+				<!-- render data from zomato api on the page -->
+				<div id="search-result">
+					<p>Name: <%= displayData[1].name %></p>
+					<p><a href="<%= displayData[1].menu_url %>" target="_blank">Menu</a></p>
+				</div>
 		</div>
 		<img id="reroll" src="reroll.png" alt="Re-Roll">
 	</main>
