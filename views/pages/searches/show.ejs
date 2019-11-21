@@ -30,6 +30,10 @@
 					<input class="inputs" name="genre_ids" value=" <%= displayData[0].genre_ids %>">
 					<button type="submit"> Add Movie!</button>
 				</form>
+				<div id="search-result">
+					<p>Name: <%= displayData[1].name %></p> <br>
+					<p><a href="<%= displayData[1].menu_url %>" target="_blank">Menu</a></p> <br>
+				</div>
 		</div>
 		<img id="reroll" src="reroll.png" alt="Re-Roll">
 	</main>
