@@ -10,27 +10,25 @@
 	<header>
 		<%-include('../../partials/header')-%>
 	</header>
-		<% displayData.forEach(movie => { %>
 		<div id="search-result">
-				<img src=" <%= movie.poster_path %>" alt="movie"> <br>
-				<p>Title: <%= movie.title %></p> <br>
-				<p>Score: <%= movie.vote_average %></p> <br>
-				<p>Overview: <%= movie.overview %></p> <br>
-				<p>Release Date: <%= movie.release_date %></p> <br>
-				<p>Genre: <%= movie.genre_ids %></p> <br>
+				<img src= <%= displayData[0].poster_path %> alt="movie"> <br>
+				<p>Title: <%= displayData[0].title %></p> <br>
+				<p>Score: <%= displayData[0].vote_average %></p> <br>
+				<p>Overview: <%= displayData[0].overview %></p> <br>
+				<p>Release Date: <%= displayData[0].release_date %></p> <br>
+				<p>Genres: <%= displayData[0].genre_ids %></p> <br>
 
 				<form action="/add" method="post" class="formfield">
-					<input class="inputs" name="title" value="<%= movie.title %>">
-					<input class="inputs" name="vote_average" value=" <%= movie.vote_average %>">
-					<input class="inputs" name="overview" value=" <%= movie.overview %>">
-					<input class="inputs" name="poster_path" value=" <%= movie.poster_path %>">
-					<input class="inputs" name="release_date" value=" <%= movie.release_date %>">
-					<input class="inputs" name="genre_ids" value=" <%= movie.genre_ids %>">
+					<input class="inputs" name="id" value="<%= displayData[0].id %>">
+					<input class="inputs" name="title" value="<%= displayData[0].title %>">
+					<input class="inputs" name="vote_average" value=" <%= displayData[0].vote_average %>">
+					<input class="inputs" name="overview" value=" <%= displayData[0].overview %>">
+					<input class="inputs" name="poster_path" value=" <%= displayData[0].poster_path %>">
+					<input class="inputs" name="release_date" value=" <%= displayData[0].release_date %>">
+					<input class="inputs" name="genre_ids" value=" <%= displayData[0].genre_ids %>">
 					<button type="submit"> Add Movie!</button>
 				</form>
 		</div>
-		<% }); %>
-
 		<img id="reroll" src="reroll.png" alt="Re-Roll">
 	</main>
 	<footer>

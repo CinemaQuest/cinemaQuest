@@ -10,14 +10,15 @@ CREATE TABLE movies (
   overview TEXT,
   thumbnail VARCHAR(255),
   release_date VARCHAR(255),
-  vote_average VARCHAR(255)
+  vote_average VARCHAR(255),
+  comment TEXT
 );
 
-INSERT INTO movies (title, overview, thumbnail, release_date, vote_average) VALUES (
+INSERT INTO movies (title, overview, thumbnail, release_date, vote_average, comment) VALUES (
   'My Awesome Title',
   'My awesome overview of this Awesome Movie',
   'Awesome_thumbnail_of_the_Awesome_Movie.png',
   '2099-12-31',
-  '0'
+  '9.25',
+  'this movie is awesome!!!'
 );
- 

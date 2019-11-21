@@ -14,15 +14,29 @@
 		<% displayData.forEach(movie => { %>
 		<div id="db-result">
 				<img src=" <%= movie.thumbnail %>" alt="movie"> <br>
-				<p>Title: <%= movie.title %></p> <br>
-				<p>Score: <%= movie.vote_average %></p> <br>
-				<!-- <p>Overview: <%= movie.overview %></p> <br> -->
-				<p>Release Date: <%= movie.release_date %></p> <br>
-				<!-- <p>Genre: <%= movie.genre_ids %></p> <br> -->
+				<p>Title: <%= movie.title %></p> 
+				<p>Score: <%= movie.vote_average %></p> 
+				<p>Overview: <%= movie.overview %></p> 
+				<p>Release Date: <%= movie.release_date %></p> 
+				<p>My Comment: <%= movie.comment %></p>
+
+				<form method="POST" action="<%=`/showMovie/${movie.id}` %>">
+					<input type="hidden" name="_method" value="DELETE">
+					<button value= <%= movie.id %>>Delete Movie </button>
+				</form>
+
+				<form method="POST" action="<%=`/update/${movie.id}` %>">
+					<input type="text" name="comment" value= "<%= movie.comment %>" placeholder="enter comment" >
+					<input type="hidden" name="_method" value="PUT">
+					<button type="submit"> Update Movie </button>
+				</form>
+				<br>
+				<br>
 		</div>
 		<% }); %>
 
 	</main>
+	<br>
 	<footer>
 		<%-include('../../partials/footer')-%>
 	</footer>
