@@ -17,8 +17,14 @@ main{
 }
 
 img{
+  width: 25vw;
   display: flex;
   align-self: center;
+}
+
+
+#logo{
+  margin-left: 37%
 }
 
 .hiddenClass{
