@@ -141,7 +141,7 @@ function foodHandler(req, res) {
     })
     .catch(() => res.render('pages/error'))
 }
-
+ 
 function findMovies(req, res) {
   res.render('../index.ejs')
 }
