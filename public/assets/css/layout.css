@@ -58,17 +58,6 @@ nav>ul>li{
   justify-content: center;
 }
 
-.introButton{
-  height: 25vh;
-  width: 25vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin-left: 3vw;
-  margin-right: 3vw;
-
-}
-
 #profile {
   border: 10px solid rgba(78, 74, 74, 0.904);
   border-radius: 50px;
