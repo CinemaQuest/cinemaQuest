@@ -15,7 +15,7 @@ let movieArr = []; //Holds movie object
 let resultsArr = []; //Holds single movie object and single foodApi object
 let randomNumber;
 let cityFood = 'seattle';
-
+let foodCount = 40;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
@@ -106,7 +106,7 @@ function movieHandler(req, res) {
 
   const i = 1;
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=${req.body.scoreMin}&vote_average.lte=${req.body.scoreMax}&vote_count.gte=150`;
-  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
+  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=${foodCount}`;
 
   //if object it is multiple genres have to join, if string just use as is.
   if ((typeof req.body.search) === 'object') {
@@ -132,7 +132,7 @@ function movieHandler(req, res) {
       superagent.get(foodUrl)
         .set('user-key', `${process.env.ZOMATO_API_KEY}`)
         .then(data => {
-          const foodNum = randomNum(0, 19)
+          const foodNum = randomNum(0, foodCount-1)
           resultsArr[1] = new Food(data.body.restaurants[foodNum])
           res.render('pages/searches/show', { displayData: resultsArr })
         })
