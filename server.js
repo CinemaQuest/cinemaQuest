@@ -137,14 +137,14 @@ function movieHandler(req, res) {
 ///////zomato API making, rendering a random restaurant.
 function foodHandler(req, res) {
 
-  // let foodUrl = `https://developers.zomato.com/api/v2.1/search?lat=47.606209&lon=-122.332069`;
   let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
 
   superagent.get(foodUrl)
     .set('user-key', `${process.env.ZOMATO_API_KEY}`)
     .then(data => {
-      let array = [];
-      array[0] = new Food(data.body.restaurants[randomNum(0, 19)])
+      let array = []
+      const foodNum = randomNum(0, 19)
+      array[0] = new Food(data.body.restaurants[foodNum])
       res.render('pages/searches/food', { restData: array })
     })
     .catch(() => res.render('pages/error'))
@@ -191,6 +191,7 @@ function getGenreNameFromId(arr, keyArr){
 function Food(meal) {
   this.name = meal.restaurant.name;
   this.menu_url = meal.restaurant.menu_url;
+  this.city = meal.restaurant.location.city;
 }
 
 const genres = [
