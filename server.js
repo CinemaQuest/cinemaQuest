@@ -118,7 +118,7 @@ function movieHandler(req, res) {
         randomNumber = randomNum(0,19);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
       }
-      console.log('result', resultsArr);
+      console.log('result', resultsArr[0]);
     })
     .then(res.render('pages/searches/show', { displayData: resultsArr}))
     .catch(() => {
