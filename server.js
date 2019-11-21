@@ -106,7 +106,8 @@ function movieHandler(req, res) {
 
   const i = 1;
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=${req.body.scoreMin}&vote_average.lte=${req.body.scoreMax}&vote_count.gte=150`;
-  
+  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
+
   //if object it is multiple genres have to join, if string just use as is.
   if ((typeof req.body.search) === 'object') {
     const genre = req.body.search.join(',')
@@ -121,13 +122,20 @@ function movieHandler(req, res) {
       if (data.body.total_pages === 1) {
         randomNumber = randomNum(0, data.body.total_results - 1);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
-        res.render('pages/searches/show', { displayData: resultsArr })
+        // res.render('pages/searches/show', { displayData: resultsArr })
 
       } else {
         randomNumber = randomNum(0, 19);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
-        res.render('pages/searches/show', { displayData: resultsArr })
+        // res.render('pages/searches/show', { displayData: resultsArr })
       }
+      superagent.get(foodUrl)
+        .set('user-key', `${process.env.ZOMATO_API_KEY}`)
+        .then(data => {
+          const foodNum = randomNum(0, 19)
+          resultsArr[1] = new Food(data.body.restaurants[foodNum])
+          res.render('pages/searches/show', { displayData: resultsArr })
+        })
     })
     .catch(() => {
       res.render('pages/noresults')
