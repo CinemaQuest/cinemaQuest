@@ -35,8 +35,8 @@ app.get('/food', foodHandler);
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
-app.use(methodOverride ((req,res) => {
-  if(req.body && typeof req.body === 'object' && '_method' in req.body){
+app.use(methodOverride((req, res) => {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     let method = req.body._method;
     delete req.body._method;
     return method;
@@ -51,36 +51,36 @@ function showMyMovie(req, res) {
   let SQL = 'SELECT * FROM movies;';
   client.query(SQL)
     .then(results => {
-      res.render('../views/pages/movies/list', { displayData: results.rows});
+      res.render('../views/pages/movies/list', { displayData: results.rows });
     })
     .catch(() => {
       res.render('pages/error');
     })
 }
-app.get('/showMovie/:id', (req,res) => {
+app.get('/showMovie/:id', (req, res) => {
   let SQL = `SELECT * FROM movies WHERE id = $1;`;
   let values = [req.params.id];
-  client.query(SQL,values)
-    .then(results =>{
-      res.render('../views/pages/movies/list', { displayData: results.rows})
+  client.query(SQL, values)
+    .then(results => {
+      res.render('../views/pages/movies/list', { displayData: results.rows })
     })
     .catch(() => {
       res.render('pages/error');
     })
 });
 
-app.delete('/showMovie/:id', (req,res) => {
+app.delete('/showMovie/:id', (req, res) => {
   let SQL = `DELETE FROM movies WHERE id = $1;`;
   let values = [req.params.id];
-  client.query(SQL,values)
+  client.query(SQL, values)
     .then(res.redirect('/showMovie'))
     .catch(err => console.error(err))
 });
 
-app.put('/update/:id',(req,res)=>{
+app.put('/update/:id', (req, res) => {
   let comment = req.body.comment;
   let SQL = 'UPDATE movies SET comment=$1 WHERE id=$2;';
-  let values = [comment, req.params.id];  
+  let values = [comment, req.params.id];
   client.query(SQL, values)
     .then(res.redirect('/showMovie'))
     .catch(err => console.error(err))
@@ -100,7 +100,7 @@ function movieHandler(req, res) {
 
   const i = 1;
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=${req.body.scoreMin}&vote_average.lte=${req.body.scoreMax}&vote_count.gte=150`;
-  
+
   if ((typeof req.body.search) === 'object') {
     const genre = req.body.search.join(',')
     url += `&with_genres=${genre}`;
@@ -112,14 +112,16 @@ function movieHandler(req, res) {
   superagent.get(url)
     .then(data => {
       if (data.body.total_pages === 1) {
-        randomNumber = randomNum(0,data.body.total_results-1);
+        randomNumber = randomNum(0, data.body.total_results - 1);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: resultsArr })
+
       } else {
-        randomNumber = randomNum(0,19);
+        randomNumber = randomNum(0, 19);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: resultsArr })
       }
     })
-    .then(res.render('pages/searches/show', { displayData: resultsArr}))
     .catch(() => {
       res.render('pages/noresults')
     })
@@ -134,7 +136,7 @@ function foodHandler(req, res) {
     .set('user-key', `${process.env.ZOMATO_API_KEY}`)
     .then(data => {
       let array = [];
-      array[0] = new Food(data.body.restaurants[randomNum(0,19)])
+      array[0] = new Food(data.body.restaurants[randomNum(0, 19)])
       res.render('pages/searches/food', { restData: array })
     })
     .catch(() => res.render('pages/error'))
@@ -144,8 +146,8 @@ function findMovies(req, res) {
   res.render('../index.ejs')
 }
 
-function addmovie(req,res) {
-  let {title, vote_average, overview, poster_path, release_date} = req.body;
+function addmovie(req, res) {
+  let { title, vote_average, overview, poster_path, release_date } = req.body;
   let SQL = 'INSERT into movies(title, overview, thumbnail, release_date, vote_average) VALUES ($1, $2, $3, $4, $5);';
   let values = [title, overview, poster_path, release_date, vote_average];
   return client.query(SQL, values)
@@ -160,8 +162,20 @@ function Movie(film) {
   this.overview = film.overview;
   this.vote_average = film.vote_average;
   this.release_date = film.release_date;
-  this.genre_ids = film.genre_ids;
+  this.genre_ids = getGenreNameFromId(genres,film.genre_ids);
   movieArr.push(this);
+}
+
+function getGenreNameFromId(arr, keyArr){
+  let names = [];
+  for(let i = 0; i < keyArr.length ; i++){
+    arr.filter(e =>{
+      if(e.id === keyArr[i]){
+        names.push( e.name)
+      }
+    })
+  }
+  return names.join(', ')
 }
 
 function Food(meal) {
@@ -170,5 +184,11 @@ function Food(meal) {
   // this.phone_numbers = meal.restaurant.phone_numbers;
   // this.menu_url = meal.restaurant.menu_url;
 }
+
+const genres = [
+  {'id': 28,'name': 'Action'},{'id': 12,'name': 'Adventure'},{'id': 16,'name': 'Animation'},{'id': 35,'name': 'Comedy'},{'id': 80,'name': 'Crime'},{'id': 99,'name': 'Documentary'},
+  {'id': 18,'name': 'Drama'},{'id': 10751,'name': 'Family'},{'id': 14,'name': 'Fantasy'},{'id': 36,'name': 'History'},{'id': 27,'name': 'Horror'},{'id': 10402,'name': 'Music'},
+  {'id': 9648,'name': 'Mystery'},{'id': 10749,'name': 'Romance'},{'id': 878,'name': 'Science Fiction'},{'id': 10770,'name': 'TV Movie'},{'id': 53,'name': 'Thriller'},{'id': 10752,'name': 'War'},{'id': 37,'name': 'Western'}
+]
 
 app.listen(PORT, () => console.log(`LiStEnInG oN pOrT ${PORT}`));
