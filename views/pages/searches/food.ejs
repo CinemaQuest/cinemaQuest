@@ -11,12 +11,12 @@
 		<%-include('../../partials/header')-%>
 	</header>
 		
-		<% foodData.forEach(food => { %>
+		<% restData.forEach(food => { %>
 			<div id="search-result">
-					<img src=" <%= food.featured_image %>" alt="food"> <br>
+					<!-- <img src=" <%= food.featured_image %>" alt="food"> <br> -->
 					<p>Name: <%= food.name %></p> <br>
-					<p>Menu: <%= food.menu_url %></p> <br>
-					<p>Phone Number: <%= food.phone_numbers %></p> <br>
+					<!-- <p>Menu: <%= food.menu_url %></p> <br> -->
+					<!-- <p>Phone Number: <%= food.phone_numbers %></p> <br> -->
 			</div>
 		<% }); %>
 
