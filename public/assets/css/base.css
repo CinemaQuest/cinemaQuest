@@ -1,5 +1,6 @@
 body{
-  background-image: linear-gradient(#11CBD7, #FA4656);
+  height: 100%;
+  background-image: linear-gradient(#11CBD7, #FA4656, #11CBD7);
 }
 
 h2, .introP, .searchMovie, .newForm{
