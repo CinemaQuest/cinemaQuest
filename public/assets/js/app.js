@@ -1,7 +1,10 @@
+// dice button makes the page reload
 $('#reroll').on('click', ()=>{
   location.reload()
 });
 
+
+// slider feature made in jquery with
 $(document).ready( ()=>{
   let outputSpan = $('#spanOutput');
   let sliderElement = $('#slider')
@@ -9,7 +12,7 @@ $(document).ready( ()=>{
     range : true,
     min: 1,
     max: 10,
-    values:[7,9],
+    values:[1,10],
     slide: function(event, ui){
       outputSpan.html(ui.values[0] + ' - ' + ui.values[1])
       $('#txtMinScore').val(ui.values[0]);

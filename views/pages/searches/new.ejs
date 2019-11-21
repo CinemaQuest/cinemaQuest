@@ -17,32 +17,70 @@
 			<div class="searchMovie">Search Movie</div><br><br>
 			<form class="newForm flexField" action="/searches" method="post">
 				<fieldset>
-
+									<!--search using checkbox to send data in body-->
 					<label for="search">Search By Genres <br><br>
 
-						<input type="checkbox" name="search" value="28">Action
-						<input type="checkbox" name="search" value="12">Adventure
-						<input type="checkbox" name="search" value="16">Animation
-						<input type="checkbox" name="search" value="35">Comedy
-						<input type="checkbox" name="search" value="80">Crime<br>
-						<input type="checkbox" name="search" value="99">Documentary
-						<input type="checkbox" name="search" value="18">Drama
-						<input type="checkbox" name="search" value="10751">Family
-						<input type="checkbox" name="search" value="14">Fantasy
-						<input type="checkbox" name="search" value="36">History<br>
-						<input type="checkbox" name="search" value="27">Horror
-						<input type="checkbox" name="search" value="10402">Music
-						<input type="checkbox" name="search" value="9648">Mystery
-						<input type="checkbox" name="search" value="10749">Romance
-						<input type="checkbox" name="search" value="878">Science Fiction<br>
-						<input type="checkbox" name="search" value="10770">TV Movie
-						<input type="checkbox" name="search" value="53">Thriller
-						<input type="checkbox" name="search" value="10752">War
-						<input type="checkbox" name="search" value="37">Western <br><br>
+						<input id="action" type="checkbox" name="search" value="28">
+						<label for="action">Action</label>
+
+						<input id="adventure" type="checkbox" name="search" value="12">
+						<label for="adventure">Adventure</label>
+
+						<input id="animation" type="checkbox" name="search" value="16">
+						<label for="animation">Animation</label>
+
+						<input id="comedy" type="checkbox" name="search" value="35">
+						<label for="comedy" >Comedy</label>
+
+						<input id="crime" type="checkbox" name="search" value="80">
+						<label for="crime">Crime</label><br>
+
+						<input id="documentary" type="checkbox" name="search" value="99">
+						<label for="documentary">Documentary</label>
+
+						<input id="drama" type="checkbox" name="search" value="18">
+						<label for="drama">Drama</label>
+
+						<input id="family" type="checkbox" name="search" value="10751">
+						<label for="family">Family</label>
+
+						<input id="fantasy" type="checkbox" name="search" value="14">
+						<label for="fantasy">Fantasy</label>
+
+						<input id="history" type="checkbox" name="search" value="36">
+						<label for="history">History</label><br>
+
+						<input id="horror" type="checkbox" name="search" value="27">
+						<label for="horror">Horror</label>
+
+						<input id="music" type="checkbox" name="search" value="10402">
+						<label for="music">Music</label>
+
+						<input id="mystery" type="checkbox" name="search" value="9648">
+						<label for="mystery">Mystery</label>
+
+						<input id="romance" type="checkbox" name="search" value="10749">
+						<label for="romance">Romance</label>
+
+						<input id="scifi"type="checkbox" name="search" value="878">
+						<label for="scifi">Science Fiction</label><br>
+
+						<input id="tv" type="checkbox" name="search" value="10770">
+						<label for="tv">TV Movie</label>
+
+						<input id="thriller" type="checkbox" name="search" value="53">
+						<label for="thriller">Thriller</label>
+
+						<input id="war" type="checkbox" name="search" value="10752">
+						<label for="war">War</label>
+
+						<input id="western" type="checkbox" name="search" value="37">
+						<label for="western">Western</label> <br><br>
 					</label>
 					<br>
 					<br>
 
+					<!--search using "range feature  built in jquery" to send data in body-->
 					<label for ="search ">Search By 
 						Score: <span id="spanOutput"></span>
 						<br><br>
