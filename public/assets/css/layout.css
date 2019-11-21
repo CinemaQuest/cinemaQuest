@@ -62,3 +62,9 @@ nav>ul>li{
   margin-left: 3vw;
   margin-right: 3vw;
 }
+
+.about-us {
+  display: flex;
+  /* align-content: center; */
+  align-self: center;
+}
