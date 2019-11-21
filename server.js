@@ -106,7 +106,7 @@ function movieHandler(req, res) {
 
   const i = 1;
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=${req.body.scoreMin}&vote_average.lte=${req.body.scoreMax}&vote_count.gte=150`;
-  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=${foodCount}`;
+  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=${foodCount}&sort=rating`;
 
   //if object it is multiple genres have to join, if string just use as is.
   if ((typeof req.body.search) === 'object') {
