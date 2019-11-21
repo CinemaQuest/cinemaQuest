@@ -1,5 +1,5 @@
-*{
-  background-color: #C6F1E7
+body{
+  background-image: linear-gradient(#11CBD7, #FA4656);
 }
 
 h2, .introP, .searchMovie, .newForm{
@@ -33,4 +33,14 @@ p, form{
   display: flex;
   background-color: lightslategray;
   border-radius: 15%;
+}
+
+li{
+  text-decoration: none;
+  font-size: 24px;
+}
+
+footer>nav>ul>li{
+  text-decoration: none;
+  font-size: 16px;
 }
