@@ -80,6 +80,7 @@ With an API key, i = 1, scoreMin = 7, scoreMax = 10, and genres=36, returns;
 ```
 
 - Zomato API Call
+ [Search call](https://developers.zomato.com/documentation#!/restaurant/search)
 ```
 https://developers.zomato.com/api/v2.1/search?lat=47.606209&lon=-122.332069
 ```
