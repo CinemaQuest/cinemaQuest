@@ -32,7 +32,7 @@ app.use(methodOverride((req, res) => {
     return method;
   }
 }));
-////////////////////////////////////////////////////////////////////////////////////////////////////Routes////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////Routes/////////////////////////////////////////////////////
 app.get('/', findMovies); //find a movie to watch
 
 app.get('/search', (req, res) => {
@@ -123,12 +123,9 @@ function movieHandler(req, res) {
       if (data.body.total_pages === 1) {
         randomNumber = randomNum(0, data.body.total_results - 1);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
-        // res.render('pages/searches/show', { displayData: resultsArr })
-
       } else {
         randomNumber = randomNum(0, 19);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
-        // res.render('pages/searches/show', { displayData: resultsArr })
       }
       superagent.get(foodUrl)
         .set('user-key', `${process.env.ZOMATO_API_KEY}`)
