@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 let movieArr = []; //Holds movie object
 let resultsArr = []; //Holds single movie object and single foodApi object
 let randomNumber;
+let cityFood = 'seattle';
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -136,7 +137,8 @@ function movieHandler(req, res) {
 ///////zomato API making, rendering a random restaurant.
 function foodHandler(req, res) {
 
-  let foodUrl = `https://developers.zomato.com/api/v2.1/search?lat=47.606209&lon=-122.332069`;
+  // let foodUrl = `https://developers.zomato.com/api/v2.1/search?lat=47.606209&lon=-122.332069`;
+  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
 
   superagent.get(foodUrl)
     .set('user-key', `${process.env.ZOMATO_API_KEY}`)
