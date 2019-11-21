@@ -31,7 +31,7 @@ app.get('/search', (req, res) => {
 app.post('/searches', movieHandler);
 app.get('/newMovie', newMovieSearch);
 app.post('/add', addmovie);
-app.post('/food', foodHandler);
+app.get('/food', foodHandler);
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
@@ -99,10 +99,8 @@ function randomNum(min, max) {
 function movieHandler(req, res) {
 
   const i = 1;
-  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=${req.body.scoreMin}&vote_average.lte=${req.body.scoreMax}&vote_count.gte=150`;
   
-  console.log('min',req.body.scoreMin)
-
   if ((typeof req.body.search) === 'object') {
     const genre = req.body.search.join(',')
     url += `&with_genres=${genre}`;
@@ -120,7 +118,6 @@ function movieHandler(req, res) {
         randomNumber = randomNum(0,19);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
       }
-      console.log('result', resultsArr[0]);
     })
     .then(res.render('pages/searches/show', { displayData: resultsArr}))
     .catch(() => {
@@ -131,15 +128,14 @@ function movieHandler(req, res) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 function foodHandler(req, res) {
 
-  let foodUrl = `https://developers.zomato.com/api/v2.1/cuisines?city_id=279&lat=47.606209&lon=122.332069`;
+  let foodUrl = `https://developers.zomato.com/api/v2.1/search?lat=47.606209&lon=-122.332069`;
 
   superagent.get(foodUrl)
     .set('user-key', `${process.env.ZOMATO_API_KEY}`)
     .then(data => {
-      console.log('data',data);
       let array = [];
-      array[0] = new Food(data.body.results)
-      res.render('pages/searches/food', { foodData: array })
+      array[0] = new Food(data.body.restaurants[randomNum(0,19)])
+      res.render('pages/searches/food', { restData: array })
     })
     .catch(() => res.render('pages/error'))
 }
@@ -169,10 +165,10 @@ function Movie(film) {
 }
 
 function Food(meal) {
-  this.featured_image = meal.featured_image;
-  this.name = meal.name;
-  this.phone_numbers = meal.phone_numbers;
-  this.menu_url = meal.menu_url;
+  // this.featured_image = meal.restaurant.featured_image;
+  this.name = meal.restaurant.name;
+  // this.phone_numbers = meal.restaurant.phone_numbers;
+  // this.menu_url = meal.restaurant.menu_url;
 }
 
 app.listen(PORT, () => console.log(`LiStEnInG oN pOrT ${PORT}`));
