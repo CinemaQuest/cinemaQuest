@@ -179,10 +179,8 @@ function getGenreNameFromId(arr, keyArr){
 }
 
 function Food(meal) {
-  // this.featured_image = meal.restaurant.featured_image;
   this.name = meal.restaurant.name;
-  // this.phone_numbers = meal.restaurant.phone_numbers;
-  // this.menu_url = meal.restaurant.menu_url;
+  this.menu_url = meal.restaurant.menu_url;
 }
 
 const genres = [
