@@ -32,7 +32,6 @@ img{
 }
 
 #reroll:hover{
-  opacity: .65;
   transform: rotate(15deg);
 }
 
@@ -50,7 +49,7 @@ nav>ul>li{
 
 .buttonDiv{
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .introButton{
@@ -63,8 +62,8 @@ nav>ul>li{
   margin-right: 3vw;
 }
 
-.about-us {
-  display: flex;
-  /* align-content: center; */
-  align-self: center;
+#profile {
+  border: 10px solid rgba(78, 74, 74, 0.904);
+  border-radius: 50px;
+  padding: 15px;
 }
