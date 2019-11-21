@@ -17,8 +17,14 @@ main{
 }
 
 img{
+  width: 25vw;
   display: flex;
   align-self: center;
+}
+
+
+#logo{
+  margin-left: 37%
 }
 
 .hiddenClass{
@@ -61,4 +67,12 @@ nav>ul>li{
   justify-content: space-around;
   margin-left: 3vw;
   margin-right: 3vw;
+
+}
+
+.about-us {
+  display: flex;
+  /* align-content: center; */
+  align-self: center;
+
 }
