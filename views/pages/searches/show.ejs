@@ -10,6 +10,7 @@
 	<header>
 		<%-include('../../partials/header')-%>
 	</header>
+			<!--this partial renders data from the movie DB API on the page-->
 		<div id="search-result">
 				<img src= <%= displayData[0].poster_path %> alt="movie"> <br>
 				<p>Title: <%= displayData[0].title %></p> <br>
@@ -18,6 +19,7 @@
 				<p>Release Date: <%= displayData[0].release_date %></p> <br>
 				<p>Genres: <%= displayData[0].genre_ids %></p> <br>
 
+				<!--form that captures all the fields given from the API and able to send them into the request body to ultimately store them in DB-->
 				<form action="/add" method="post" class="formfield">
 					<input class="inputs" name="id" value="<%= displayData[0].id %>">
 					<input class="inputs" name="title" value="<%= displayData[0].title %>">
