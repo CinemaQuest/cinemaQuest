@@ -10,7 +10,9 @@ const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-let movieArr = [];
+let movieArr = []; //Holds movie object
+let resultsArr = []; //Holds single movie object and single foodApi object
+let randomNumber;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
@@ -29,6 +31,7 @@ app.get('/search', (req, res) => {
 app.post('/searches', movieHandler);
 app.get('/newMovie', newMovieSearch);
 app.post('/add', addmovie);
+app.post('/food', foodHandler);
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
@@ -39,7 +42,6 @@ app.use(methodOverride ((req,res) => {
     return method;
   }
 }));
-
 
 function newMovieSearch(req, res) {
   res.render('../views/pages/searches/new');
@@ -98,6 +100,8 @@ function movieHandler(req, res) {
 
   const i = 1;
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
+  
+  console.log('min',req.body.scoreMin)
 
   if ((typeof req.body.search) === 'object') {
     const genre = req.body.search.join(',')
@@ -106,25 +110,38 @@ function movieHandler(req, res) {
     const genre = req.body.search
     url += `&with_genres=${genre}`;
   }
-  let randomNumber;
+
   superagent.get(url)
     .then(data => {
-      console.log('data.body.total_results',data.body.total_results)
       if (data.body.total_pages === 1) {
         randomNumber = randomNum(0,data.body.total_results-1);
-        let array =[];
-        array[0] = new Movie(data.body.results[randomNumber])
-        res.render('pages/searches/show', { displayData: array})
+        resultsArr[0] = new Movie(data.body.results[randomNumber])
       } else {
         randomNumber = randomNum(0,19);
-        let array =[];
-        array[0] = new Movie(data.body.results[randomNumber])
-        res.render('pages/searches/show', { displayData: array})
+        resultsArr[0] = new Movie(data.body.results[randomNumber])
       }
+      console.log('result', resultsArr);
     })
+    .then(res.render('pages/searches/show', { displayData: resultsArr}))
     .catch(() => {
       res.render('pages/noresults')
     })
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+function foodHandler(req, res) {
+
+  let foodUrl = `https://developers.zomato.com/api/v2.1/cuisines?city_id=279&lat=47.606209&lon=122.332069`;
+
+  superagent.get(foodUrl)
+    .set('user-key', `${process.env.ZOMATO_API_KEY}`)
+    .then(data => {
+      console.log('data',data);
+      let array = [];
+      array[0] = new Food(data.body.results)
+      res.render('pages/searches/food', { foodData: array })
+    })
+    .catch(() => res.render('pages/error'))
 }
 
 function findMovies(req, res) {
@@ -149,6 +166,13 @@ function Movie(film) {
   this.release_date = film.release_date;
   this.genre_ids = film.genre_ids;
   movieArr.push(this);
+}
+
+function Food(meal) {
+  this.featured_image = meal.featured_image;
+  this.name = meal.name;
+  this.phone_numbers = meal.phone_numbers;
+  this.menu_url = meal.menu_url;
 }
 
 app.listen(PORT, () => console.log(`LiStEnInG oN pOrT ${PORT}`));

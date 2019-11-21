@@ -22,8 +22,13 @@ img{
   align-self: center;
 }
 
+
 #logo{
   margin-left: 37%
+}
+
+.hiddenClass{
+  visibility: visible;
 }
 
 #reroll{
@@ -34,9 +39,8 @@ img{
 
 #reroll:hover{
   opacity: .65;
-          transform: rotate(-15deg);
+  transform: rotate(15deg);
 }
-
 
 nav{
   display: flex;

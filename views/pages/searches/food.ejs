@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<%-include('../../partials/head')-%>
+	<title>Cinema Quest</title>
+</head>
+
+<body>
+	<header>
+		<%-include('../../partials/header')-%>
+	</header>
+		
+		<% foodData.forEach(food => { %>
+			<div id="search-result">
+					<img src=" <%= food.featured_image %>" alt="food"> <br>
+					<p>Name: <%= food.name %></p> <br>
+					<p>Menu: <%= food.menu_url %></p> <br>
+					<p>Phone Number: <%= food.phone_numbers %></p> <br>
+			</div>
+		<% }); %>
+
+
+
+		<img id="reroll" src="reroll.png" alt="Re-Roll">
+	</main>
+	<footer>
+		<%-include('../../partials/footer')-%>
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="../../../public/assets/js/app.js"></script>
+</body>
+
+</html>
