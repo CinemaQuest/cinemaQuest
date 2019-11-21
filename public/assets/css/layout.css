@@ -21,6 +21,10 @@ img{
   align-self: center;
 }
 
+.hiddenClass{
+  visibility: visible;
+}
+
 #reroll{
   width:20vh;
   height:20vh;
@@ -29,9 +33,8 @@ img{
 
 #reroll:hover{
   opacity: .65;
-          transform: rotate(-15deg);
+  transform: rotate(15deg);
 }
-
 
 nav{
   display: flex;
