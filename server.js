@@ -10,7 +10,9 @@ const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-let movieArr = [];
+let movieArr = []; //Holds movie object
+let resultsArr = []; //Holds single movie object and single foodApi object
+let randomNumber;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
@@ -99,6 +101,10 @@ function movieHandler(req, res) {
   const i = 1;
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=7&vote_average.lte=10`;
 
+  let foodUrl = `https://developers.zomato.com/api/v2.1/search?entity_type=city&q=seattle&count=2&lat=47.606209&lon=-122.332069&radius=10&sort=rating&order=asc&`;
+
+// --header "Accept: application/json" --header "user-key: 47fd412c6981713220cc265002bc570f" "https://developers.zomato.com/api/v2.1/cuisines?city_id=279&lat=47.606209&lon=122.332069"
+
   if ((typeof req.body.search) === 'object') {
     const genre = req.body.search.join(',')
     url += `&with_genres=${genre}`;
@@ -106,22 +112,29 @@ function movieHandler(req, res) {
     const genre = req.body.search
     url += `&with_genres=${genre}`;
   }
-  let randomNumber;
+
   superagent.get(url)
     .then(data => {
       console.log('data.body.total_results',data.body.total_results)
       if (data.body.total_pages === 1) {
         randomNumber = randomNum(0,data.body.total_results-1);
-        let array =[];
-        array[0] = new Movie(data.body.results[randomNumber])
-        res.render('pages/searches/show', { displayData: array})
+        resultsArr[0] = new Movie(data.body.results[randomNumber])
+        // res.render('pages/searches/show', { displayData: array})
       } else {
         randomNumber = randomNum(0,19);
-        let array =[];
-        array[0] = new Movie(data.body.results[randomNumber])
-        res.render('pages/searches/show', { displayData: array})
+        resultsArr[0] = new Movie(data.body.results[randomNumber])
+        // res.render('pages/searches/show', { displayData: array})
       }
     })
+    .then(res.render('pages/searches/show', { displayData: resultsArr}))
+    //   superagent.get(foodUrl)
+    //    .set('user-key', process.env.ZOMATO_APIKEY )
+    //    .then(results => {
+    //       console.log(results);
+    //       // resultsArr[1] = results.data;
+    //     }
+    //       .then (res.render('pages/searches/show', { displayData: resultsArr}))
+    // })
     .catch(() => {
       res.render('pages/noresults')
     })
