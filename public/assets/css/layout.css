@@ -17,8 +17,14 @@ main{
 }
 
 img{
+  width: 25vw;
   display: flex;
   align-self: center;
+}
+
+
+#logo{
+  margin-left: 37%
 }
 
 .hiddenClass{
@@ -32,7 +38,6 @@ img{
 }
 
 #reroll:hover{
-  opacity: .65;
   transform: rotate(15deg);
 }
 
@@ -50,15 +55,18 @@ nav>ul>li{
 
 .buttonDiv{
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
-.introButton{
-  height: 25vh;
-  width: 25vw;
+#profile {
+  border: 10px solid rgba(78, 74, 74, 0.904);
+  border-radius: 50px;
+  padding: 15px;
+}
+
+.about-us {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin-left: 3vw;
-  margin-right: 3vw;
+  /* align-content: center; */
+  align-self: center;
+
 }

@@ -8,8 +8,10 @@
 
 <body>
 	<header>
+		<main>
 		<%-include('../../partials/header')-%>
 	</header>
+	<!--this partial renders data from the zomato api on the page-->
 		
 		<% restData.forEach(food => { %>
 			<div id="search-result">
@@ -18,12 +20,10 @@
 			</div>
 		<% }); %>
 
-
-
 		<!-- <img id="reroll" src="reroll.png" alt="Re-Roll"> -->
 	</main>
 	<footer>
-		<%-include('../../partials/footer')-%>
+			<%-include('../../partials/footer')-%>
 	</footer>
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="../../../public/assets/js/app.js"></script>

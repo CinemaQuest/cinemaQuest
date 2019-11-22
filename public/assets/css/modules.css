@@ -1,0 +1,10 @@
+#slider{
+    width:65%;
+    margin-left:17.5%;
+}
+.hiddenClass{
+    visibility: hidden;
+}
+fieldset{
+    border:none;
+}

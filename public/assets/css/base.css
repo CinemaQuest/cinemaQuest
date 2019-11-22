@@ -1,5 +1,6 @@
-*{
-  background-color: #C6F1E7
+body{
+  height: 100%;
+  background-image: linear-gradient(#11CBD7, #FA4656, #11CBD7);
 }
 
 h2, .introP, .searchMovie, .newForm{
@@ -14,10 +15,6 @@ h2, .introP, .searchMovie, .newForm{
 
 input{
   height: 25px;
-}
-
-img{
-  width: 25vw;
 }
 
 .inputs{
@@ -37,4 +34,23 @@ p, form{
   display: flex;
   background-color: lightslategray;
   border-radius: 15%;
+  height: 10vh;
+  width: 10vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 3vw;
+  margin-right: 3vw;
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+li{
+  text-decoration: none;
+  font-size: 24px;
+}
+
+footer>nav>ul>li{
+  text-decoration: none;
+  font-size: 16px;
 }
