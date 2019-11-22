@@ -41,7 +41,7 @@ app.get('/search', (req, res) => {
 app.post('/searches', movieHandler);
 app.get('/newMovie', newMovieSearch);
 app.post('/add', addmovie);
-app.get('/food', foodHandler);
+// app.get('/food', foodHandler);
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
@@ -106,8 +106,10 @@ function movieHandler(req, res) {
 
   const i = 1;
   const foodNum = randomNum(0, foodCount-1);
+
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&page=${i}&with_original_language=en&vote_average.gte=${req.body.scoreMin}&vote_average.lte=${req.body.scoreMax}&vote_count.gte=150`;
-  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&start=${foodNum}&count=${foodCount}&sort=rating`;
+
+  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=seattle&start=2&count=20&sort=rating`;
 
   //if object it is multiple genres have to join, if string just use as is.
   if ((typeof req.body.search) === 'object') {
@@ -120,20 +122,27 @@ function movieHandler(req, res) {
   //superagent call, making sure the request body has a certain amount of page before we render.
   superagent.get(url)
     .then(data => {
+
       if (data.body.total_pages === 1) {
         randomNumber = randomNum(0, data.body.total_results - 1);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
       } else {
-        randomNumber = randomNum(0, 19);
+        randomNumber = randomNum(0, 19); 
+
         resultsArr[0] = new Movie(data.body.results[randomNumber])
       }
       superagent.get(foodUrl)
         .set('user-key', `${process.env.ZOMATO_API_KEY}`)
         .then(data => {
+          console.log('MOVIE HANDLERS FOOD ROUTE:',data.body.restaurants)
           resultsArr[1] = new Food(data.body.restaurants[foodNum])
+          console.log('resultsArr',resultsArr)
           res.render('pages/searches/show', { displayData: resultsArr })
         })
-        .catch(() => res.render('pages/error'))
+        .catch((err) => {
+          console.log('FOOD URL', foodUrl)
+          res.render('pages/error', err)
+        })
     })
     .catch(() => {
       res.render('pages/noresults')
@@ -141,20 +150,20 @@ function movieHandler(req, res) {
 }
 
 ///////zomato API making, rendering a random restaurant.
-function foodHandler(req, res) {
+// function foodHandler(req, res) {
 
-  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
+//   let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
 
-  superagent.get(foodUrl)
-    .set('user-key', `${process.env.ZOMATO_API_KEY}`)
-    .then(data => {
-      let array = []
-      const foodNum = randomNum(0, 19)
-      array[0] = new Food(data.body.restaurants[foodNum])
-      res.render('pages/searches/food', { restData: array })
-    })
-    .catch(() => res.render('pages/error'))
-}
+//   superagent.get(foodUrl)
+//     .set('user-key', `${process.env.ZOMATO_API_KEY}`)
+//     .then(data => {
+//       let array = []
+//       const foodNum = randomNum(0, 19)
+//       array[0] = new Food(data.body.restaurants[0])
+//       res.render('pages/searches/food', { restData: array })
+//     })
+//     .catch(() => res.render('pages/error'))
+// }
 
 function findMovies(req, res) {
   res.render('../index.ejs')
