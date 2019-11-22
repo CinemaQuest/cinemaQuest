@@ -41,7 +41,7 @@ app.get('/search', (req, res) => {
 app.post('/searches', movieHandler);
 app.get('/newMovie', newMovieSearch);
 app.post('/add', addmovie);
-app.get('/food', foodHandler);
+// app.get('/food', foodHandler);
 app.get('/showMovie', showMyMovie);
 app.get('/aboutUs', aboutUsPage);
 
@@ -127,13 +127,15 @@ function movieHandler(req, res) {
         randomNumber = randomNum(0, data.body.total_results - 1);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
       } else {
-        randomNumber = randomNum(0, 19);
+        randomNumber = randomNum(0, 19); 
+
         resultsArr[0] = new Movie(data.body.results[randomNumber])
       }
 
       superagent.get(foodUrl)
         .set('user-key', `${process.env.ZOMATO_API_KEY}`)
         .then(data => {
+          console.log('MOVIE HANDLERS FOOD ROUTE:',data)
           resultsArr[1] = new Food(data.body.restaurants[foodNum])
           res.render('pages/searches/show', { displayData: resultsArr })
         })
@@ -151,20 +153,20 @@ function movieHandler(req, res) {
 }
 
 ///////zomato API making, rendering a random restaurant.
-function foodHandler(req, res) {
+// function foodHandler(req, res) {
 
-  let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
+//   let foodUrl = `https://developers.zomato.com/api/v2.1/search?q=${cityFood}&count=20`;
 
-  superagent.get(foodUrl)
-    .set('user-key', `${process.env.ZOMATO_API_KEY}`)
-    .then(data => {
-      let array = []
-      const foodNum = randomNum(0, 19)
-      array[0] = new Food(data.body.restaurants[0])
-      res.render('pages/searches/food', { restData: array })
-    })
-    .catch(() => res.render('pages/error'))
-}
+//   superagent.get(foodUrl)
+//     .set('user-key', `${process.env.ZOMATO_API_KEY}`)
+//     .then(data => {
+//       let array = []
+//       const foodNum = randomNum(0, 19)
+//       array[0] = new Food(data.body.restaurants[0])
+//       res.render('pages/searches/food', { restData: array })
+//     })
+//     .catch(() => res.render('pages/error'))
+// }
 
 function findMovies(req, res) {
   res.render('../index.ejs')
