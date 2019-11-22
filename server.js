@@ -138,8 +138,9 @@ function movieHandler(req, res) {
           res.render('pages/searches/show', { displayData: resultsArr })
         })
         .catch((err) => {
-          console.log('ERROR ON MOVIE HANDLER ROUTE:', err);
-          res.render('pages/error', err);
+          console.log('ERROR ON MOVIE HANDLER ROUTE:', err)
+          console.log('FOOD URL', foodUrl)
+          res.render('pages/error', err)
         })
 
 
