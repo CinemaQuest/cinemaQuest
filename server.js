@@ -133,13 +133,13 @@ function movieHandler(req, res) {
       }
       superagent.get(foodUrl)
         .set('user-key', `${process.env.ZOMATO_API_KEY}`)
-        .then(data => {
-          console.log('MOVIE HANDLERS FOOD ROUTE:',data.body)
-          console.log('MOVIE HANDLERS FOOD ROUTE2:',data.body.restaurants)
+        .then(results => {
+          console.log('Food HANDLERS FOOD ROUTE:',results.body)
+          console.log(' Food HANDLERS FOOD ROUTE2:',results.body.restaurants)
           console.log('RESULTS:',resultsArr)
 
 
-          resultsArr[1] = new Food(data.body.restaurants[1])
+          resultsArr[1] = new Food(results.body.restaurants[1])
           console.log('resultsArr',resultsArr)
           setTimeout( () =>{
             res.render('pages/searches/show', { displayData: resultsArr })
