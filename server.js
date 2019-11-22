@@ -160,7 +160,7 @@ function foodHandler(req, res) {
     .then(data => {
       let array = []
       const foodNum = randomNum(0, 19)
-      array[0] = new Food(data.body.restaurants[foodNum])
+      array[0] = new Food(data.body.restaurants[0])
       res.render('pages/searches/food', { restData: array })
     })
     .catch(() => res.render('pages/error'))
