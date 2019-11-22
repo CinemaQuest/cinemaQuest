@@ -137,6 +137,7 @@ function movieHandler(req, res) {
         .then(data => {
           console.log('MOVIE HANDLERS FOOD ROUTE:',data.body.restaurants)
           resultsArr[1] = new Food(data.body.restaurants[foodNum])
+          console.log('resultsArr',resultsArr)
           res.render('pages/searches/show', { displayData: resultsArr })
         })
         .catch((err) => {
