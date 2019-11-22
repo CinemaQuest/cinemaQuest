@@ -131,7 +131,6 @@ function movieHandler(req, res) {
 
         resultsArr[0] = new Movie(data.body.results[randomNumber])
       }
-
       superagent.get(foodUrl)
         .set('user-key', `${process.env.ZOMATO_API_KEY}`)
         .then(data => {
@@ -144,8 +143,6 @@ function movieHandler(req, res) {
           console.log('FOOD URL', foodUrl)
           res.render('pages/error', err)
         })
-
-
     })
     .catch(() => {
       res.render('pages/noresults')
