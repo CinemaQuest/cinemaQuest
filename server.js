@@ -126,27 +126,16 @@ function movieHandler(req, res) {
       if (data.body.total_pages === 1) {
         randomNumber = randomNum(0, data.body.total_results - 1);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: resultsArr })
       } else {
-        randomNumber = randomNum(0, 19); 
-
+        randomNumber = randomNum(0, 19);
         resultsArr[0] = new Movie(data.body.results[randomNumber])
+        res.render('pages/searches/show', { displayData: resultsArr })
       }
-      superagent.get(foodUrl)
-        .set('user-key', `${process.env.ZOMATO_API_KEY}`)
-        .then(data => {
-          console.log('MOVIE HANDLERS FOOD ROUTE:',data.body.restaurants)
-          resultsArr[1] = new Food(data.body.restaurants[foodNum])
-          console.log('resultsArr',resultsArr)
-          res.render('pages/searches/show', { displayData: resultsArr })
-        })
-        // .catch((err) => {
-        //   console.log('FOOD URL', foodUrl)
-        //   res.render('pages/error', err)
-        // })
     })
-    // .catch(() => {
-    //   res.render('pages/noresults')
-    // })
+    .catch(() => {
+      res.render('pages/noresults')
+    })
 }
 
 ///////zomato API making, rendering a random restaurant.
