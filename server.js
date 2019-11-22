@@ -139,14 +139,14 @@ function movieHandler(req, res) {
           console.log('resultsArr',resultsArr)
           res.render('pages/searches/show', { displayData: resultsArr })
         })
-        .catch((err) => {
-          console.log('FOOD URL', foodUrl)
-          res.render('pages/error', err)
-        })
+        // .catch((err) => {
+        //   console.log('FOOD URL', foodUrl)
+        //   res.render('pages/error', err)
+        // })
     })
-    .catch(() => {
-      res.render('pages/noresults')
-    })
+    // .catch(() => {
+    //   res.render('pages/noresults')
+    // })
 }
 
 ///////zomato API making, rendering a random restaurant.
